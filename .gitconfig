@@ -1,0 +1,41 @@
+[include]
+	path = .gitconfig.env
+
+[user]
+	name = tanakakz
+	email = tanakakz.feb.23@gmail.com
+[color]
+	ui = auto
+[core]
+	quotepath = false
+	precomposeunicode = true
+	pager = diff-so-fancy | less --tabs=2 -RFX
+[alias]
+	in = init
+	df = diff
+	co = commit
+	ps = push
+	pl = pull
+	fe = fetch
+	sw = switch
+	lg = log --graph --all --pretty=format:'%Cgreen%h%Creset %cn %s %Cred%d%Creset'
+
+[push]
+	default = simple
+
+[hub]
+	protocol = https
+[help]
+	autocorrect = 1
+
+[diff]
+	compactionHeuristic = true
+	colorMoved = zebra
+[http]
+	cookiefile = $HOME/.gitcookies
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+
