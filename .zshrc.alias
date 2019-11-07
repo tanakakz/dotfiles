@@ -1,0 +1,37 @@
+#!/bin/bash
+
+###
+# "bat"
+# - good 'cat'. show with color, line number.
+# None alias. normal 'cat' command is useful for raw stdout.
+
+###
+# "diff-so-fancy"
+# - good 'git diff'. show with color.
+# None alias. you should set git-config like this:
+# % git config --global pager.diff "diff-so-fancy | less --tabs=2 -RFX"
+# % git config --global pager.show "diff-so-fancy | less --tabs=2 -RFX"
+
+###
+# "exa"
+# - good 'ls'. show with color.
+alias ls="exa"
+alias ll="exa -lg"
+alias la="exa -laghF"
+
+###
+# "fzf"
+# - a command-line fuzzy finder.
+alias pfzf="fzf --preview=\"bat {} --color=always\"" # fzf with file preview by 'bat'.
+alias vfzf="vim \$(pfzf)" # edit file choice by 'pfzf' with 'vim'.
+
+###
+# "fd"
+# - good 'find'. find entries in the filesystem so quickly.
+alias find="fd"
+
+###
+# "tldr"
+# - good 'man'. a collection of simplified and community-driven man pages.
+# None
+

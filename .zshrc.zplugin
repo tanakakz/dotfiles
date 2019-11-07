@@ -1,0 +1,39 @@
+# tmux (端末多重化ソフトウェア）
+export PATH="/usr/local/opt/ncurses/bin:$PATH"
+
+# プロンプト表示をいい感じにする
+export PROMPT='
+%F{cyan}[%n@%m]%f %F{green}%~%f
+%% '
+
+# "-F":ディレクトリに"/"を表示 / "-G"でディレクトリを色表示
+alias ls='ls -FG'
+alias ll='ls -alFG'
+
+
+### Added by Zplugin's installer
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin installer's chunk
+
+# 略語を展開する
+zplugin load momo-lab/zsh-abbrev-alias
+# 実行可能なコマンドに色付け
+zplugin load zsh-users/zsh-syntax-highlighting
+# 補完
+zplugin load zsh-users/zsh-completions
+
+# Git拡張
+zplugin ice wait"2" lucid as"program" pick"bin/git-dsf"
+zplugin light zdharma/zsh-diff-so-fancy
+
+zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-now" make"prefix=$ZPFX install"
+zplugin light iwata/git-now
+
+zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-alias" make"PREFIX=$ZPFX" nocompile
+zplugin light tj/git-extras
+
+zplugin ice wait"2" lucid as"program" atclone'perl Makefile.PL PREFIX=$ZPFX' atpull'%atclone' \
+            make'install' pick"$ZPFX/bin/git-cal"
+zplugin light k4rthik/git-cal
