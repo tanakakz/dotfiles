@@ -1,0 +1,158 @@
+#!/bin/bash
+run_brew() {
+  if has "brew"; then
+    echo "$(tput setaf 2)Already installed Homebrew ✔︎$(tput sgr0)"
+  else
+    echo "Installing Homebrew..."
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+
+  if has "brew"; then
+    echo "Updating Homebrew..."
+    brew update && brew upgrade
+    [[ $? ]] && echo "$(tput setaf 2)Update Homebrew complete. ✔︎$(tput sgr0)"
+
+    brew tap 'caskroom/cask'
+    # brew tap 'homebrew/apache'
+    # brew tap 'homebrew/dupes'
+    brew tap 'sanemat/font'
+    # brew tap 'homebrew/php'
+    brew tap 'greymd/tools'
+
+    local list_formulae
+    local -a missing_formulae
+    local -a desired_formulae=(
+      # 'ab' # apache bench: web server stress test tool
+      'anyenv' # any lang pkg manager's environment manager
+      'autoconf' # autotools: configure builder
+      'automake' # autotools: makefile builder
+      # 'awscli' # aws cli kit
+      # 'android-sdk' # android sdk
+      'ansible' # soft-provisioning, conf-managgement and app-deploy tool
+      'asciinema' # terminal session recoder/player
+      'bat' # beautiful color cat
+      # 'cocoapods' # ios lib manager
+      # 'composer' # php lib & pkg manager
+      'coreutils' # os core util command (ex. ls, cat, rm)
+      'ctags' # indexer builder for refer from text editors
+      'curl' # get a file from an http, https or ftp server 
+      # 'dart' # programming language dart
+      'diff-so-fancy' # beautiful color git-diff
+      'exa' # beautiful color ls
+      'fd' # quickly find
+      # 'ffmpeg' # video and audio record, convert and play tool
+      'fontforge' # font editor
+      'fzf' # tui file selector can preview with bat
+      'gcc' # gnu compiler collection
+      'gettext' # i18n and 110n text localizer in compiling
+      'gibo' # .gitignore builder
+      'git' # vcs git
+      'gpg' # gnu privacy guard
+      # 'httpd22' # apache httpd 2.2
+      'hub' # git wrapper for github
+      # 'ideviceinstaller' # ios device manager
+      'imagemagick' # image create, edit, compose, convert tool
+      # 'ios-deploy' # ios app installer without xcode
+      'iproute2mac' # ip cmd for mac
+      'jq' # command-line json processor
+      'libimobiledevice' # cross-platform protocol lib to access ios devices
+      # 'mysql' # rdbms mysql
+      'neovim' # next generation vim
+      'nkf' # network kanji char-code convert filter
+      'nyan' # cat with type-format support 
+      'openssl' # ssl lib
+      # 'packer' # machine image creater tool
+      'peco' # simple interactive filtering tool
+      # 'postgresql' # rdbms postgresql
+      'qt' # cross-platform application development framework qt
+      'pwgen' # random password generator
+      'sqlite' # simple one file rdbms sqlite
+      # 'svn' # vcs subversion
+      'the_platinum_searcher' # code search tool support multi platform and multi encoding
+      'tldr' # show simple usage of any command
+      'tmux' # terminal multiplexer
+      'tmux-xpanes' # terminal divider powered by tmux
+      'unar' # commnad-line unarchiving tools support multi formats
+      'tree' # display directories as trees
+      'wget' # internet file retriever
+      'yarn' # javascript pkg manager yarn
+      # 'youtube-dl' # command-line youtube videos download tool
+      'zsh' # unix shell zsh
+    )
+
+    local installed=`brew list`
+
+    for index in ${!desired_formulae[*]}
+    do
+      local formula=`echo ${desired_formulae[$index]} | cut -d' ' -f 1`
+      if [[ -z `echo "${installed}" | grep "^${formula}$"` ]]; then
+        missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+      else
+        echo "Installed ${formula}"
+        [[ "${formula}" = "ricty" ]] && local installed_ricty=true
+      fi
+    done
+
+    if [[ "$missing_formulae" ]]; then
+      list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+
+      echo "Installing missing Homebrew formulae..."
+      brew install $list_formulae
+
+      [[ $? ]] && echo "$(tput setaf 2)Installed missing formulae ✔︎$(tput sgr0)"
+    fi
+
+    ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+    if [ -z "${installed_ricty}"  ]; then
+      echo "Reload fonts. This could take a while..."
+      local cellar=`brew --config | grep 'HOMEBREW_CELLAR' | cut -d' ' -f 2`
+      find ${cellar}/ricty/*/share/fonts/Ricty*.ttf | xargs -I % cp % ~/Library/Fonts
+      fc-cache -vf
+    fi
+
+    local -a missing_formulae=()
+    local -a desired_formulae=(
+      'dash' # api docs browser and code snippet manager
+      # 'dashlane' # secure password manager
+      # 'dropbox' # cloud storage dropbox
+      'firefox' # web browser firefox
+      'franz' # messaging app support multi service (ex. whatsapp, facebook messenger, slack, skype)
+      'google-chrome' # web browser chrome
+      # 'google-drive' # cloud storage google-drive
+	  'iterm2' # terminal iterm2
+      'skitch' # screenshot editing and sharing utility
+      'vagrant' # building and maintaining portable virtual software development environments (ex. virtualbox, kvm, hyper-v, docker)
+      'virtualbox' # hypervisor for x86 virtualization developed by oracle
+      'visual-studio-code' # ligtweight but powerful source code editor vscode
+      'xquartz' # x11 (x window system) implements for macos
+    )
+	# cask
+    local installed=`brew cask list`
+
+    for index in ${!desired_formulae[*]}
+    do
+      local formula=`echo ${desired_formulae[$index]} | cut -d' ' -f 1`
+      if [[ -z `echo "${installed}" | grep "^${formula}$"` ]]; then
+        missing_formulae=("${missing_formulae[@]}" "${desired_formulae[$index]}")
+      else
+        echo "Installed ${formula}"
+      fi
+    done
+
+    pod setup
+
+    if [[ "$missing_formulae" ]]; then
+      list_formulae=$( printf "%s " "${missing_formulae[@]}" )
+
+      echo "Installing missing Homebrew formulae..."
+      brew cask install $list_formulae
+
+      [[ $? ]] && echo "$(tput setaf 2)Installed missing formulae ✔︎$(tput sgr0)"
+    fi
+
+    echo "Cleanup Homebrew..."
+    brew cleanup
+    echo "$(tput setaf 2)Cleanup Homebrew complete. ✔︎$(tput sgr0)"
+  fi
+}
