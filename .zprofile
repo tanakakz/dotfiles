@@ -10,3 +10,6 @@ export PATH="$HOME/.anyenv/bin:$PATH"
 # *env managed by anyenv (ex. goenv, rbenv)
 eval "$(anyenv init -)"
 
+# go
+export PATH="$GOPATH/bin:$PATH"
+
