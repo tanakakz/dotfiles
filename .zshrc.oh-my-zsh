@@ -106,21 +106,5 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# for bat - good style and color cat
-# None
-# for diff-so-fancy - good color diff
-# None
-# for exa - good color ls
-alias ls="exa"
-alias ll="exa -lg"
-alias l="exa -laghF"
-# for fzf - good file-selector
-alias pfzf="fzf --preview=\"bat {} --color=always\""
-alias vfzf="vim \$(pfzf)" 
-# for fd - good quickly find
-alias find="fd"
-# for tldr - good shrink man
-# None
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
