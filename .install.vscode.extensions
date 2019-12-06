@@ -1,0 +1,56 @@
+# エディタのVim化
+code --install-extension vscode.vim --force
+
+# 日本語パック
+code --install-extension ms-ceintl.vscode-language-pack-ja --force
+
+# AIアシストによるコーディング支援(Python, TypeScript/JavaScript, Java)
+code --install-extension visualstudioexptteam.vscodeintellicode --force
+
+# 括弧強調
+code --install-extension coenraads.bracket-pair-colorizer-2 --force
+
+# 行端記号可視化
+code --install-extension jeff-hykin.code-eol --force
+
+# 全角空白可視化
+code --install-extension mosapride.zenkaku --force
+
+### Git関係
+# git blame 便利化
+code --install-extension eamodio.gitlens --force
+# git log 便利化
+code --install-extension donjayamanne.githistory --force
+# git log --graph 便利化
+code --install-extension mhutchie.git-graph --force
+
+# コード整形
+code --install-extension esbenp.prettier-vscode --force
+
+# EMCAScript (TypeScript/JavaScript)
+code --install-extension dbaeumer.vscode-eslint --force
+
+# Go
+code --install-extension ms-vscode.go --force
+
+# Markdown
+code --install-extension yzhang.markdown-all-in-one --force
+code --install-extension davidanson.vscode-markdownlint --force
+
+# Ruby
+code --install-extension rebornix.ruby --force
+code --install-extension wingrunr21.vscode-ruby --force
+
+
+# Rust
+code --install-extension rust-lang.rust --force
+
+# Vue
+code --install-extension hollowtree.vue-snippets --force
+code --install-extension octref.vetur --force
+
+# Yarn
+code --install-extension mariusschulz.yarn-lock-syntax --force
+
+
+
