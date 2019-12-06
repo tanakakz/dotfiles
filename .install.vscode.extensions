@@ -1,5 +1,5 @@
 # エディタのVim化
-code --install-extension vscode.vim --force
+code --install-extension vscodevim.vim --force
 
 # 日本語パック
 code --install-extension ms-ceintl.vscode-language-pack-ja --force
